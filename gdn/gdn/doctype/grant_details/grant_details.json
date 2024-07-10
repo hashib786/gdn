@@ -1,0 +1,111 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-08 14:24:14.897170",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "tranche_id",
+  "project",
+  "estimated_end_of_milestone",
+  "expiry_mail_sent",
+  "currency",
+  "column_break_lthi",
+  "tranche_name",
+  "task",
+  "approval_date",
+  "mail_sent",
+  "amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "tranche_id",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Tranche ID",
+   "options": "Subject"
+  },
+  {
+   "fetch_from": "tranche_id.project",
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fetch_from": "tranche_id.estimated_end_of_milestone",
+   "fieldname": "estimated_end_of_milestone",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Estimated End Of Milestone"
+  },
+  {
+   "default": "0",
+   "fetch_from": "tranche_id.expiry_mail_sent",
+   "fieldname": "expiry_mail_sent",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Expiry Mail Sent"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "column_break_lthi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "tranche_id.name1",
+   "fieldname": "tranche_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Tranche Name"
+  },
+  {
+   "fetch_from": "tranche_id.task",
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Task",
+   "options": "Task"
+  },
+  {
+   "fetch_from": "tranche_id.approval_date",
+   "fieldname": "approval_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Approval Date"
+  },
+  {
+   "default": "0",
+   "fetch_from": "tranche_id.mail_sent",
+   "fieldname": "mail_sent",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Mail Sent"
+  },
+  {
+   "fetch_from": "tranche_id.amount",
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "options": "Currency"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-07-08 14:24:14.897170",
+ "modified_by": "Administrator",
+ "module": "Gdn",
+ "name": "Grant Details",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

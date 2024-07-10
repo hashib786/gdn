@@ -10,7 +10,7 @@ app_license = "mit"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/gdn/css/gdn.css"
+app_include_css = "gdn.bundle.css"
 # app_include_js = "/assets/gdn/js/gdn.js"
 
 # include js, css files in header of web template
@@ -28,7 +28,10 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+    "Project" : "customization/Project/project.js",
+    
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -122,13 +125,24 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
+doc_events = {
 # 	"*": {
 # 		"on_update": "method",
 # 		"on_cancel": "method",
 # 		"on_trash": "method"
 # 	}
-# }
+"Payment Entry":{
+    "on_submit": "gdn.customization.payment_entry.payment_entry.update_subject_final_amount",
+    "on_cancel": "gdn.customization.payment_entry.payment_entry.update_subject_final_amount"
+},
+"GL Entry":{
+    "after_insert":"gdn.customization.gl_entry.gl_entry.update_project_in_gl_entry"
+},
+"Task":{
+    "validate":"gdn.customization.task.task.validate_task"
+}
+
+}
 
 # Scheduled Tasks
 # ---------------

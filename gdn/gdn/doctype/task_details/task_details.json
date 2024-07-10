@@ -1,0 +1,215 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-03 14:35:34.835976",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "task_details_section",
+  "task_id",
+  "priority",
+  "parent_task",
+  "column_break_vroy",
+  "subject",
+  "status",
+  "timeline_section",
+  "expected_start_date",
+  "column_break_jlym",
+  "expected_end_date",
+  "budget_section",
+  "budget_allocated",
+  "budget_for_january",
+  "budget_for_march",
+  "budget_for_may",
+  "budget_for_july",
+  "budget_for_septenber",
+  "budget_for_november",
+  "column_break_gwpp",
+  "actual_expense",
+  "budget_for_february",
+  "budget_for_april",
+  "budget_for_june",
+  "budget_for_august",
+  "budget_for_october",
+  "budget_for_december"
+ ],
+ "fields": [
+  {
+   "fieldname": "task_details_section",
+   "fieldtype": "Section Break",
+   "label": "Task Details"
+  },
+  {
+   "fieldname": "task_id",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Task ID",
+   "options": "Task"
+  },
+  {
+   "fetch_from": "task_id.priority",
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Priority",
+   "options": "\nLow\nMedium\nHigh\nUrgent"
+  },
+  {
+   "fetch_from": "task_id.parent_task",
+   "fieldname": "parent_task",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Parent Task",
+   "options": "Task"
+  },
+  {
+   "fieldname": "column_break_vroy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "task_id.subject",
+   "fieldname": "subject",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Subject"
+  },
+  {
+   "fetch_from": "task_id.status",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "\nOpen\nWorking\nPending Review\nOverdue\nTemplate\nCompleted\nCancelled"
+  },
+  {
+   "fieldname": "timeline_section",
+   "fieldtype": "Section Break",
+   "label": "Timeline"
+  },
+  {
+   "fetch_from": "task_id.exp_start_date",
+   "fieldname": "expected_start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Expected Start Date"
+  },
+  {
+   "fieldname": "column_break_jlym",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "task_id.exp_end_date",
+   "fieldname": "expected_end_date",
+   "fieldtype": "Data",
+   "label": "Expected End Date"
+  },
+  {
+   "fieldname": "budget_section",
+   "fieldtype": "Section Break",
+   "label": "Budget"
+  },
+  {
+   "fieldname": "budget_allocated",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Budget Allocated",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "budget_for_january",
+   "fieldtype": "Currency",
+   "label": " Budget For January",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "budget_for_march",
+   "fieldtype": "Currency",
+   "label": "Budget For March",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "budget_for_may",
+   "fieldtype": "Currency",
+   "label": "Budget For May",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "budget_for_july",
+   "fieldtype": "Currency",
+   "label": "Budget For July",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "budget_for_septenber",
+   "fieldtype": "Currency",
+   "label": "Budget For Septenber",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "budget_for_november",
+   "fieldtype": "Currency",
+   "label": "Budget For November",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "column_break_gwpp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "actual_expense",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Actual Expense",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "budget_for_february",
+   "fieldtype": "Currency",
+   "label": "Budget For February",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "budget_for_april",
+   "fieldtype": "Currency",
+   "label": "Budget For April",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "budget_for_june",
+   "fieldtype": "Currency",
+   "label": "Budget For June ",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "budget_for_august",
+   "fieldtype": "Currency",
+   "label": "Budget For August",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "budget_for_october",
+   "fieldtype": "Currency",
+   "label": "Budget For October",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "budget_for_december",
+   "fieldtype": "Currency",
+   "label": "Budget For December",
+   "options": "Currency"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-07-10 13:12:12.829100",
+ "modified_by": "Administrator",
+ "module": "Gdn",
+ "name": "Task Details",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

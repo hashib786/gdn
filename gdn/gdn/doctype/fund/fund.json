@@ -1,0 +1,80 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-10 12:57:01.612384",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "general_section",
+  "fund_type",
+  "donor_id",
+  "donor_name",
+  "column_break_voav",
+  "currency",
+  "amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "general_section",
+   "fieldtype": "Section Break",
+   "label": "General"
+  },
+  {
+   "fieldname": "fund_type",
+   "fieldtype": "Select",
+   "label": "Fund Type",
+   "options": "\nRestricted\nAllowed"
+  },
+  {
+   "fieldname": "donor_id",
+   "fieldtype": "Link",
+   "label": "Donor ID",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "donor_name",
+   "fieldtype": "Data",
+   "label": "Donor Name "
+  },
+  {
+   "fieldname": "column_break_voav",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "options": "Currency"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-07-10 12:57:01.612384",
+ "modified_by": "Administrator",
+ "module": "Gdn",
+ "name": "Fund",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

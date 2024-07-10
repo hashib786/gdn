@@ -1,0 +1,153 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-08 14:25:23.818675",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "details_section",
+  "role_of_person",
+  "contract_type",
+  "project",
+  "grantee",
+  "grantee_name",
+  "status",
+  "column_break_rqjp",
+  "sent_on",
+  "signed_on",
+  "subject",
+  "remarks",
+  "currency",
+  "total_grant",
+  "grant_details_section",
+  "grant_details",
+  "address_and_contact_section",
+  "address"
+ ],
+ "fields": [
+  {
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "role_of_person",
+   "fieldtype": "Select",
+   "label": "Role of Person",
+   "options": "\nGrantee\nGrant"
+  },
+  {
+   "fieldname": "contract_type",
+   "fieldtype": "Select",
+   "label": "Contract Type",
+   "options": "\nSelf\nOrganization"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "grantee",
+   "fieldtype": "Link",
+   "label": "Grantee",
+   "options": "Supplier"
+  },
+  {
+   "fetch_from": "grantee.supplier_name",
+   "fieldname": "grantee_name",
+   "fieldtype": "Data",
+   "label": "Grantee Name"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nOpen\nClosed"
+  },
+  {
+   "fieldname": "column_break_rqjp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sent_on",
+   "fieldtype": "Date",
+   "label": "Sent On"
+  },
+  {
+   "fieldname": "signed_on",
+   "fieldtype": "Date",
+   "label": "Signed On"
+  },
+  {
+   "fieldname": "subject",
+   "fieldtype": "Link",
+   "label": "Study Name ",
+   "options": "Task"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Text Editor",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "total_grant",
+   "fieldtype": "Currency",
+   "label": "Total Grant",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "grant_details_section",
+   "fieldtype": "Section Break",
+   "label": "Grant Details"
+  },
+  {
+   "fieldname": "grant_details",
+   "fieldtype": "Table",
+   "label": "Grant Details",
+   "options": "Grant Details"
+  },
+  {
+   "fieldname": "address_and_contact_section",
+   "fieldtype": "Section Break",
+   "label": "Address and Contact"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Link",
+   "label": "Address",
+   "options": "Address"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-07-08 14:25:23.818675",
+ "modified_by": "Administrator",
+ "module": "Gdn",
+ "name": "Grant",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
