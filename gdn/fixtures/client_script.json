@@ -1,0 +1,35 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Project",
+  "enabled": 0,
+  "modified": "2024-07-10 14:16:57.884779",
+  "module": "Gdn",
+  "name": "get tasks",
+  "script": "frappe.ui.form.on('Project', {\n    refresh: function(frm) {\n        frm.add_custom_button(__('Get Tasks'), function() {\n            if (!frm.doc.__islocal) {\n                frappe.call({\n                    method: 'frappe.client.get_list',\n                    args: {\n                        doctype: 'Task',\n                        filters: [\n                            ['project', '=', frm.doc.name],\n                            ['is_group', '=', 0]  // Exclude group tasks\n                        ],\n                        fields: ['name', 'subject', 'status', 'priority', 'parent_task']  // Include priority and parent_task\n                    },\n                    callback: function(r) {\n                        if (r && r.message.length > 0) {\n                            frm.clear_table('custom_task_details');\n                            r.message.forEach(function(task) {\n                                var row = frm.add_child('custom_task_details');\n                                row.task_id = task.name;\n                                row.subject = task.subject;\n                                row.status = task.status;\n                                row.priority = task.priority;  // Populate priority\n                                row.parent_task = task.parent_task;  // Populate parent task\n                            });\n                            frm.refresh_field('custom_task_details');\n                        } else {\n                            frappe.msgprint(__('No tasks have been created against this project.'));\n                        }\n                    }\n                });\n            } else {\n                frappe.msgprint(__('Please save the project first to load tasks.'));\n            }\n        });\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Project",
+  "enabled": 1,
+  "modified": "2024-07-10 14:16:58.036205",
+  "module": "Gdn",
+  "name": "Currency Symbol",
+  "script": "frappe.ui.form.on('Project', {\n    \n    refresh:function(frm){\n        \n        let currency = frm.doc.custom_currency;\n        \n        \n        if (currency) {\n            // Fetch the currency symbol from the Currency doctype\n            frappe.db.get_value('Currency', currency, 'symbol').then((res) => {\n                if (res && res.message && res.message.symbol) {\n                    const symbol = res.message.symbol;\n                    const fields_to_update = [\n                        'budget_allocated', 'actual_expense',\n                        'budget_for_january', 'budget_for_february', 'budget_for_march', \n                        'budget_for_april', 'budget_for_may', 'budget_for_june', \n                        'budget_for_july', 'budget_for_august', 'budget_for_september', \n                        'budget_for_october', 'budget_for_november', 'budget_for_december'\n                    ];\n\n                    // Function to capitalize the first letter of each word\n                    function capitalizeWords(str) {\n                        return str.replace(/_/g, ' ').replace(/\\b\\w/g, function(l){ return l.toUpperCase() });\n                    }\n\n                    // Update the labels of the fields in the child table\n                    fields_to_update.forEach(field => {\n                        const new_label = `${capitalizeWords(field)} (${symbol})`;\n                        frm.fields_dict['custom_task_details'].grid.update_docfield_property(field, 'label', new_label);\n                    });\n\n                    // Refresh the field to apply changes\n                    frm.refresh_field('custom_task_details');\n\n                    // Unfreeze the screen\n                    // frappe.dom.unfreeze();\n                }\n            });\n        }\n        \n    },\n    \n    custom_currency: function(frm) {\n        \n        let currency = frm.doc.custom_currency;\n        \n        \n        if (currency) {\n            // Fetch the currency symbol from the Currency doctype\n            frappe.db.get_value('Currency', currency, 'symbol').then((res) => {\n                if (res && res.message && res.message.symbol) {\n                    const symbol = res.message.symbol;\n                    const fields_to_update = [\n                        'budget_allocated', 'actual_expense',\n                        'budget_for_january', 'budget_for_february', 'budget_for_march', \n                        'budget_for_april', 'budget_for_may', 'budget_for_june', \n                        'budget_for_july', 'budget_for_august', 'budget_for_september', \n                        'budget_for_october', 'budget_for_november', 'budget_for_december'\n                    ];\n\n                    // Function to capitalize the first letter of each word\n                    function capitalizeWords(str) {\n                        return str.replace(/_/g, ' ').replace(/\\b\\w/g, function(l){ return l.toUpperCase() });\n                    }\n\n                    // Update the labels of the fields in the child table\n                    fields_to_update.forEach(field => {\n                        const new_label = `${capitalizeWords(field)} (${symbol})`;\n                        frm.fields_dict['custom_task_details'].grid.update_docfield_property(field, 'label', new_label);\n                    });\n\n                    // Refresh the field to apply changes\n                    frm.refresh_field('custom_task_details');\n\n                    // Unfreeze the screen\n                    // frappe.dom.unfreeze();\n                }\n            });\n        }\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Subject",
+  "enabled": 0,
+  "modified": "2024-07-10 14:16:57.996530",
+  "module": "Gdn",
+  "name": "Task Filter in Subject",
+  "script": "frappe.ui.form.on('Subject', {\n    setup: function(frm) {\n        frm.set_query('task', function(doc) {\n            return {\n                filters: {\n                    'project': doc.project\n                }\n            };\n        });\n    },\n    \n    project: function(frm) {\n        // Clear the task field when project changes\n        frm.set_value('task', '');\n    }\n});",
+  "view": "Form"
+ }
+]

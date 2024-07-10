@@ -241,3 +241,8 @@ doc_events = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+fixtures = [
+    {"dt": "Custom Field", "filters": []},
+    {"dt": "Property Setter", "filters": []},
+    {"dt": "Client Script", "filters":[]}
+]
