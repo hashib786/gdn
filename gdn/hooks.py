@@ -138,9 +138,7 @@ doc_events = {
 "GL Entry":{
     "after_insert":"gdn.customization.gl_entry.gl_entry.update_project_in_gl_entry"
 },
-"Task":{
-    "validate":"gdn.customization.task.task.validate_task"
-}
+
 
 }
 
