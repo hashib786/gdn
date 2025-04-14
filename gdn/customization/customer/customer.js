@@ -28,6 +28,9 @@ frappe.ui.form.on("Customer", {
     },
     custom_onboarding_status: function (frm) {
         frm.set_value("custom_onboarding_status", Boolean(frm.doc.custom_agreement_doc && frm.doc.custom_kyc_doc) ? "Completed" : "Pending");
+        if(frm.doc.custom_onboarding_status == "Completed") {
+            frm.set_value("custom_onboarding_date", frappe.datetime.now_date());
+        }
     },
     onload: function (frm) {
         // Read Only custom_agreement_approved, custom_kyc_
