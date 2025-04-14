@@ -13,13 +13,37 @@ frappe.ui.form.on("Customer", {
             frm.set_value("custom_status", "Active");
         }
     },
-    refresh: function(frm) {
+
+    custom_agreement_doc: function (frm) {
+        console.log({ custom_agreement_approved: Boolean(frm.doc.custom_agreement_doc), custom_onboarding_status: Boolean(frm.doc.custom_agreement_doc && frm.doc.custom_kyc_doc) });
+        frm.set_value("custom_agreement_approved", Boolean(frm.doc.custom_agreement_doc));
+        frm.set_value("custom_agreement_verification_status", Boolean(frm.doc.custom_agreement_doc) ? "Verified" : "Pending");
+        frm.set_value("custom_onboarding_status", Boolean(frm.doc.custom_agreement_doc && frm.doc.custom_kyc_doc) ? "Completed" : "Pending");
+    },
+    custom_kyc_doc: function (frm) {
+        console.log({ custom_kyc_: Boolean(frm.doc.custom_agreement_doc), custom_onboarding_status: Boolean(frm.doc.custom_agreement_doc && frm.doc.custom_kyc_doc) });
+        frm.set_value("custom_kyc_", Boolean(frm.doc.custom_kyc_doc));
+        frm.set_value("custom_kyc_verification_status", Boolean(frm.doc.custom_kyc_doc) ? "Verified" : "Pending");
+        frm.set_value("custom_onboarding_status", Boolean(frm.doc.custom_agreement_doc && frm.doc.custom_kyc_doc) ? "Completed" : "Pending");
+    },
+    custom_onboarding_status: function (frm) {
+        frm.set_value("custom_onboarding_status", Boolean(frm.doc.custom_agreement_doc && frm.doc.custom_kyc_doc) ? "Completed" : "Pending");
+    },
+    onload: function (frm) {
+        // Read Only custom_agreement_approved, custom_kyc_
+        const readOnlyFields = [
+            "custom_agreement_approved",
+            "custom_kyc_",
+        ];
+        readOnlyFields.forEach((field) => frm.set_df_property(field, "read_only", 1));
+    },
+    refresh: function (frm) {
         // frm.add_custom_button(__('Validate Website'), function() {
         //     validateWebsite(frm);
         // });
-        
+
         // Add the Create Budget button
-        frm.add_custom_button(__('Create Budget'), function() {
+        frm.add_custom_button(__('Create Budget'), function () {
             // Navigate to the Donor Task Budget page with the customer's name as a query parameter
             const baseUrl = window.location.origin;
             const donorTaskBudgetUrl = `${baseUrl}/frontend/donor-task-budget?customer=${frm.doc.name}`;
@@ -38,13 +62,13 @@ function validateWebsite(frm) {
     if (frm.doc.website) {
         // Remove any whitespace
         let website = frm.doc.website.trim();
-        
+
         // Basic URL validation regex
         const urlRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
-        
+
         // List of valid TLDs
         const validTLDs = ['com', 'in', 'org', 'net', 'edu', 'gov', 'co', 'biz', 'info'];
-        
+
         if (!urlRegex.test(website)) {
             frappe.msgprint({
                 title: __('Invalid Website'),
@@ -53,10 +77,10 @@ function validateWebsite(frm) {
             });
             return false;
         }
-        
+
         // Extract TLD from URL
         const tld = website.split('.').pop().toLowerCase();
-        
+
         if (!validTLDs.includes(tld)) {
             frappe.msgprint({
                 title: __('Invalid Domain'),
@@ -65,12 +89,12 @@ function validateWebsite(frm) {
             });
             return false;
         }
-        
+
         // If URL doesn't start with http:// or https://, add https://
         if (!website.startsWith('http://') && !website.startsWith('https://')) {
             frm.set_value('website', 'https://' + website);
         }
-        
+
         frappe.msgprint({
             title: __('Valid Website'),
             indicator: 'green',
