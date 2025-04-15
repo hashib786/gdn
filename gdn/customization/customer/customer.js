@@ -34,14 +34,20 @@ const defaultFillTheVal = [{
     dateTime: "custom_kyc_change_date_time"
 }]
 
-const hideFields = ["custom_old_agreement_verified_value",
+const hideFields = [
+    "custom_old_agreement_verified_value",
     "custom_agreement_changed_date_time",
     "custom_old_onboarding_status_verified",
     "custom_onboarding_status_change_date_time",
     "custom_old_onboarding_date_value",
     "custom_onboarding_change_date_time",
     "custom_old_kyc_value_",
-    "custom_kyc_change_date_and_time"];
+    "custom_kyc_change_date_and_time",
+    "custom_old_agreement_docs",
+    "custom_agreement__change_date_time",
+    "custom_old_kyc_docs",
+    "custom_kyc_change_date_time",
+];
 
 const readOnlyFields = [
     "custom_agreement_approved",
