@@ -21,6 +21,17 @@ const defaultFillTheVal = [{
     fieldName: "KYC Verification Status",
     value: "custom_old_kyc_value_",
     dateTime: "custom_kyc_change_date_and_time"
+}, {
+    field: "custom_agreement_doc",
+    fieldName: "Agreement Doc",
+    value: "custom_old_agreement_docs",
+    dateTime: "custom_agreement__change_date_time"
+},
+{
+    field: "custom_kyc_doc",
+    fieldName: "KYC Doc",
+    value: "custom_old_kyc_docs",
+    dateTime: "custom_kyc_change_date_time"
 }]
 
 const hideFields = ["custom_old_agreement_verified_value",
@@ -78,7 +89,7 @@ frappe.ui.form.on("Customer", {
                 const newValue = [{
                     "custom_field_name": field.fieldName,
                     "from": frm.doc[field.value] || "Blank",
-                    "to": frm.doc[field.field],
+                    "to": frm.doc[field.field] || "Blank",
                     "custom_field_api_name": field.field,
                     "from_date": frm.doc[field.dateTime] || currentDateTime,
                     "to_date": currentDateTime,
