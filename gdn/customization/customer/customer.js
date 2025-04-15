@@ -23,8 +23,6 @@ const defaultFillTheVal = [{
     dateTime: "custom_kyc_change_date_and_time"
 }]
 
-const dateTimeFields = ["custom_agreement_changed_date_time"];
-
 const hideFields = ["custom_old_agreement_verified_value",
     "custom_agreement_changed_date_time",
     "custom_old_onboarding_status_verified",
@@ -33,6 +31,11 @@ const hideFields = ["custom_old_agreement_verified_value",
     "custom_onboarding_change_date_time",
     "custom_old_kyc_value_",
     "custom_kyc_change_date_and_time"];
+
+const readOnlyFields = [
+    "custom_agreement_approved",
+    "custom_kyc_",
+];
 
 frappe.ui.form.on("Customer", {
     custom_status: function (frm) {
@@ -82,12 +85,7 @@ frappe.ui.form.on("Customer", {
                     "from_date": frm.doc[field.dateTime] || currentDateTime,
                     "to_date": currentDateTime,
                     custom_changed_by: frm.doc.modified_by,
-                    custom_changed_durations: formatDurationFromMinutesWithSeconds(
-                        frappe.datetime.get_minute_diff(
-                            currentDateTime,
-                            frm.doc[field.dateTime] || currentDateTime,
-                        )
-                    ),
+                    custom_changed_durations: formatDurationFromMinutesWithSeconds((new Date(currentDateTime).getTime() - new Date(frm.doc[field.dateTime] || currentDateTime).getTime()) / 1000),
                 }, ...frm.doc.custom_logs || []];
                 console.log({ newValue })
                 frm.set_value("custom_logs", newValue);
@@ -98,10 +96,7 @@ frappe.ui.form.on("Customer", {
     },
     onload: function (frm) {
         // Read Only custom_agreement_approved, custom_kyc_
-        const readOnlyFields = [
-            "custom_agreement_approved",
-            "custom_kyc_",
-        ];
+
         readOnlyFields.forEach((field) => frm.set_df_property(field, "read_only", 1));
 
         // Hide fields
@@ -177,10 +172,10 @@ function validateWebsite(frm) {
 }
 
 
-function formatDurationFromMinutesWithSeconds(minutesStr) {
+function formatDurationFromMinutesWithSeconds(secondsStr) {
     // Convert to BigInt for large safe numbers
-    console.log({ minutesStr });
-    const totalSeconds = BigInt(minutesStr) * 60n;
+    console.log({ secondsStr });
+    const totalSeconds = BigInt(secondsStr);
 
     const secondsInDay = 24n * 60n * 60n;
     const secondsInHour = 60n * 60n;
@@ -195,5 +190,5 @@ function formatDurationFromMinutesWithSeconds(minutesStr) {
     const minutes = remainingAfterHours / secondsInMinute;
     const seconds = remainingAfterHours % secondsInMinute;
 
-    return `${days} days, ${hours} hours, ${minutes} minutes`;
+    return `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
 }
