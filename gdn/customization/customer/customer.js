@@ -54,13 +54,11 @@ frappe.ui.form.on("Customer", {
     },
 
     custom_agreement_doc: function (frm) {
-        console.log({ custom_agreement_approved: Boolean(frm.doc.custom_agreement_doc), custom_onboarding_status: Boolean(frm.doc.custom_agreement_doc && frm.doc.custom_kyc_doc) });
         frm.set_value("custom_agreement_approved", Boolean(frm.doc.custom_agreement_doc));
         frm.set_value("custom_agreement_verification_status", Boolean(frm.doc.custom_agreement_doc) ? "Verified" : "Pending");
         frm.set_value("custom_onboarding_status", Boolean(frm.doc.custom_agreement_doc && frm.doc.custom_kyc_doc) ? "Completed" : "Pending");
     },
     custom_kyc_doc: function (frm) {
-        console.log({ custom_kyc_: Boolean(frm.doc.custom_agreement_doc), custom_onboarding_status: Boolean(frm.doc.custom_agreement_doc && frm.doc.custom_kyc_doc) });
         frm.set_value("custom_kyc_", Boolean(frm.doc.custom_kyc_doc));
         frm.set_value("custom_kyc_verification_status", Boolean(frm.doc.custom_kyc_doc) ? "Verified" : "Pending");
         frm.set_value("custom_onboarding_status", Boolean(frm.doc.custom_agreement_doc && frm.doc.custom_kyc_doc) ? "Completed" : "Pending");
@@ -87,7 +85,6 @@ frappe.ui.form.on("Customer", {
                     custom_changed_by: frm.doc.modified_by,
                     custom_changed_durations: formatDurationFromMinutesWithSeconds((new Date(currentDateTime).getTime() - new Date(frm.doc[field.dateTime] || currentDateTime).getTime()) / 1000),
                 }, ...frm.doc.custom_logs || []];
-                console.log({ newValue })
                 frm.set_value("custom_logs", newValue);
                 frm.set_value(field.dateTime, frappe.datetime.now_datetime());
                 frm.set_value(field.value, frm.doc[field.field]);
@@ -96,7 +93,6 @@ frappe.ui.form.on("Customer", {
     },
     onload: function (frm) {
         // Read Only custom_agreement_approved, custom_kyc_
-
         readOnlyFields.forEach((field) => frm.set_df_property(field, "read_only", 1));
 
         // Hide fields
@@ -174,7 +170,6 @@ function validateWebsite(frm) {
 
 function formatDurationFromMinutesWithSeconds(secondsStr) {
     // Convert to BigInt for large safe numbers
-    console.log({ secondsStr });
     const totalSeconds = BigInt(secondsStr);
 
     const secondsInDay = 24n * 60n * 60n;
