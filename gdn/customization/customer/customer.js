@@ -99,7 +99,7 @@ frappe.ui.form.on("Customer", {
                     "custom_field_api_name": field.field,
                     "from_date": frm.doc[field.dateTime] || currentDateTime,
                     "to_date": currentDateTime,
-                    custom_changed_by: frm.doc.modified_by ?? frm.doc.owner,
+                    custom_changed_by: frappe.session.user_fullname ?? frm.doc.owner,
                     custom_changed_durations: formatDurationFromMinutesWithSeconds((new Date(currentDateTime).getTime() - new Date(frm.doc[field.dateTime] || currentDateTime).getTime()) / 1000),
                 }, ...frm.doc.custom_logs || []];
                 frm.set_value("custom_logs", newValue);
