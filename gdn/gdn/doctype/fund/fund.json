@@ -55,8 +55,8 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-10 12:57:01.612384",
- "modified_by": "Administrator",
+ "modified": "2025-05-08 16:26:05.560999",
+ "modified_by": "altamash@extensioncrm.com",
  "module": "Gdn",
  "name": "Fund",
  "owner": "Administrator",
@@ -74,6 +74,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

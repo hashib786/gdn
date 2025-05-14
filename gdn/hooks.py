@@ -11,7 +11,7 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 app_include_css = "gdn.bundle.css"
-# app_include_js = "/assets/gdn/js/gdn.js"
+app_include_js = "gdn.bundle.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/gdn/css/gdn.css"
@@ -30,7 +30,7 @@ app_include_css = "gdn.bundle.css"
 # include js in doctype views
 doctype_js = {
     "Project" : "customization/Project/project.js",
-    
+    "Customer" : "customization/customer/customer.js",
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}

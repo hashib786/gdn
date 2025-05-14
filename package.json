@@ -1,0 +1,20 @@
+{
+  "name": "gdn",
+  "version": "1.0.0",
+  "description": "custom app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "cd donor_budget && yarn install",
+    "dev": "cd donor_budget && yarn dev",
+    "build": "cd donor_budget && yarn build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "swr": "^2.2.4"
+  }
+}

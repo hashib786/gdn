@@ -5,3 +5,6 @@
 tags
 node_modules
 __pycache__
+gdn/public/donor_budget
+gdn/public/donor_budget/*
+gdn/public/dist

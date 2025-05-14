@@ -114,8 +114,69 @@ frappe.ui.form.on("Customer", {
 
         // Hide fields
         hideFields.forEach((field) => frm.set_df_property(field, "hidden", 1));
+        
+        // Make custom_logs table read-only to prevent editing
+        frm.set_df_property("custom_logs", "read_only", 1);
     },
     refresh: function (frm) {
+        // Disable all edit buttons in the custom_logs table
+        if (frm.fields_dict.custom_logs && frm.fields_dict.custom_logs.grid) {
+            // Method 1: Use built-in Frappe options to make grid read-only
+            frm.set_df_property("custom_logs", "read_only", 1);
+            frm.set_df_property("custom_logs", "cannot_add_rows", 1);
+            frm.set_df_property("custom_logs", "cannot_delete_rows", 1);
+            
+            // Method 2: Override the grid's row form methods
+            frm.fields_dict.custom_logs.grid.allow_on_grid_editing = false;
+            frm.fields_dict.custom_logs.grid.grid_pagination.page_length = 50; // Show more rows to avoid pagination
+            
+            // Method 3: Override open form method to prevent editing
+            frm.fields_dict.custom_logs.grid.grid_rows.forEach(function(row) {
+                if (row) {
+                    row.show_form = function() { return false; };
+                    if (row.open_form_button) {
+                        row.open_form_button.hide();
+                    }
+                }
+            });
+
+            // Method 4: Use CSS to ensure the edit button is hidden
+            frappe.dom.set_style(`
+                .grid-row-open {display: none !important;}
+                .grid-row .row-index {pointer-events: none !important;}
+                [data-fieldname="custom_logs"] .btn-open-row {display: none !important;}
+                [data-fieldname="custom_logs"] .grid-buttons {display: none !important;}
+                [data-fieldname="custom_logs"] .grid-footer {display: none !important;}
+                [data-fieldname="custom_logs"] .grid-row-check {display: none !important;}
+            `);
+            
+            // Method 5: Direct DOM manipulation to forcibly remove all edit buttons
+            // Use a timer to ensure this runs after the grid is rendered
+            setTimeout(function() {
+                // Remove all edit buttons from the grid
+                $('[data-fieldname="custom_logs"] .btn-open-row').remove();
+                
+                // Unbind all click events from grid rows
+                $('[data-fieldname="custom_logs"] .grid-row').unbind('click').css('cursor', 'default');
+                
+                // Override the grid click handler
+                $('[data-fieldname="custom_logs"]').find('.grid-body').on('click', '.grid-row', function(e) {
+                    e.stopPropagation();
+                    return false;
+                });
+                
+                // Make sure buttons stay hidden
+                observer = new MutationObserver(function(mutations) {
+                    $('[data-fieldname="custom_logs"] .btn-open-row').remove();
+                });
+                
+                observer.observe($('[data-fieldname="custom_logs"]')[0], { 
+                    childList: true,
+                    subtree: true 
+                });
+            }, 100);
+        }
+
         // frm.add_custom_button(__('Validate Website'), function() {
         //     validateWebsite(frm);
         // });
@@ -133,6 +194,9 @@ frappe.ui.form.on("Customer", {
         frm.remove_custom_button("Validate Website");
         frm.remove_custom_button("Accounts Receivable", "View");
         frm.remove_custom_button("Accounting Ledger", "View");
+        
+        // Remove Pricing Rule from Create dropdown
+        frm.remove_custom_button("Pricing Rule", "Create");
     },
 
 });
