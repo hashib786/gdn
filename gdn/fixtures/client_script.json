@@ -2,6 +2,17 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
+  "dt": "Task",
+  "enabled": 1,
+  "modified": "2024-07-16 07:34:05.008305",
+  "module": "Gdn",
+  "name": "Budget Value Updation in Task",
+  "script": "frappe.ui.form.on('Task', {\n    custom_no_of_units: function(frm) {\n        calculate_budget(frm);\n    },\n    custom_unit_cost: function(frm) {\n        calculate_budget(frm);\n    }\n});\n\nfunction calculate_budget(frm) {\n    var no_of_units = frm.doc.custom_no_of_units || 0;\n    var unit_cost = frm.doc.custom_unit_cost || 0;\n    var budget = no_of_units * unit_cost;\n    \n    frm.set_value('custom_budget', budget);\n}",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
   "dt": "Project",
   "enabled": 0,
   "modified": "2024-07-10 14:16:57.884779",
@@ -30,6 +41,39 @@
   "module": "Gdn",
   "name": "Task Filter in Subject",
   "script": "frappe.ui.form.on('Subject', {\n    setup: function(frm) {\n        frm.set_query('task', function(doc) {\n            return {\n                filters: {\n                    'project': doc.project\n                }\n            };\n        });\n    },\n    \n    project: function(frm) {\n        // Clear the task field when project changes\n        frm.set_value('task', '');\n    }\n});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Customer",
+  "enabled": 1,
+  "modified": "2025-04-16 15:31:28.341842",
+  "module": null,
+  "name": "USDonNational",
+  "script": "\nfrappe.ui.form.on('Customer', {\n    customer_group: function(frm) {\n        if (frm.doc.customer_group === 'National') {\n            frm.set_value('default_currency', 'USD'); \n        } else {\n            frm.set_value('default_currency',''); \n        }\n    }\n});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Grant",
+  "enabled": 1,
+  "modified": "2025-04-17 17:27:13.859788",
+  "module": null,
+  "name": "Grant End Date Validation",
+  "script": "frappe.ui.form.on('Grant', {\r\n    custom_grant_end_date: function(frm) {\r\n        if (frm.doc.custom_grant_start_date && frm.doc.custom_grant_end_date) {\r\n            const start = new Date(frm.doc.custom_grant_start_date);\r\n            const end = new Date(frm.doc.custom_grant_end_date);\r\n            \r\n            if (end < start) {\r\n                frappe.msgprint(__('Grant End Date cannot be before Grant Start Date.'));\r\n                // Reset the end date to empty or start date\r\n                frm.set_value('custom_grant_end_date', '');\r\n                // OR set it equal to start date\r\n                // frm.set_value('custom_grant_end_date', frm.doc.custom_grant_start_date);\r\n            }\r\n        }\r\n    }\r\n});\r\n\r\n\r\n\r\n\r\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Customer",
+  "enabled": 1,
+  "modified": "2025-05-08 14:34:45.250973",
+  "module": "Selling",
+  "name": "Attachment",
+  "script": "frappe.ui.form.on(\"Customer\", {\n    refresh(frm) {\n        frm.fields_dict.agreement_docs.$wrapper.html(`\n            <button id=\"bulk-upload-btn\" class=\"btn btn-info\">Attach</button>\n            <br>\n\n        `);\n\n        $('#bulk-upload-btn').on('click', function () {\n            const uploader = new frappe.ui.FileUploader({\n                allow_multiple: 1,\n                doctype: frm.doctype,\n                docname: frm.docname,\n                restrictions: { allowed_file_types: null },\n                on_success(file) {\n                    frappe.show_alert({\n                        message: __(\"Uploaded: \") + file.file_name,\n                        indicator: 'green'\n                    });\n                }\n            });\n            uploader.show();\n        });\n    }\n});\n",
   "view": "Form"
  }
 ]
